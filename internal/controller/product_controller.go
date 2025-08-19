@@ -4,6 +4,7 @@ import (
 	"golang-api/internal/model"
 	"golang-api/internal/usecase"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -45,5 +46,43 @@ func (p *productController) CreateProduct(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, insertedProduct)
+
+}
+
+func (p *productController) GetProductByID(ctx *gin.Context) {
+
+	id := ctx.Param("productId")
+	if id == "" {
+		response := gin.H{
+			"message": "Invalid product ID",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	productId, err := strconv.Atoi(id)
+	if err != nil {
+		response := gin.H{
+			"message": "ID must be a number",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	product, err := p.productUsecase.GetProductByID(productId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	if product == nil {
+		response := gin.H{
+			"message": "Product not found",
+		}
+		ctx.JSON(http.StatusNotFound, response)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, product)
 
 }
