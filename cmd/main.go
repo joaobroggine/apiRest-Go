@@ -1,10 +1,10 @@
 package main
 
 import (
-	"golang-api/controller"
 	"golang-api/db"
-	"golang-api/repository"
-	"golang-api/usecase"
+	"golang-api/internal/controller"
+	"golang-api/internal/repository"
+	"golang-api/internal/usecase"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,6 +32,8 @@ func main() {
 	})
 
 	server.GET("/products", ProductController.GetProducts)
+	server.GET("/productz/:productId", ProductController.GetProductByID)
+	server.POST("/products", ProductController.CreateProduct)
 
 	server.Run(":8080")
 
