@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"golang-api/usecase"
+	"golang-api/internal/usecase"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

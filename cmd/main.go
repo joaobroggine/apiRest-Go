@@ -1,10 +1,10 @@
 package main
 
 import (
-	"golang-api/controller"
 	"golang-api/db"
-	"golang-api/repository"
-	"golang-api/usecase"
+	"golang-api/internal/controller"
+	"golang-api/internal/repository"
+	"golang-api/internal/usecase"
 
 	"github.com/gin-gonic/gin"
 )
